@@ -7,7 +7,6 @@ public class SeatAvailabilityEntryDto {
 
     private int trainId;
 
-
     private Station fromStation;
 
     private Station toStation;
@@ -28,7 +27,6 @@ public class SeatAvailabilityEntryDto {
     public void setTrainId(int trainId) {
         this.trainId = trainId;
     }
-
 
     public Station getFromStation() {
         return fromStation;

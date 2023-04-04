@@ -21,12 +21,26 @@ public class TrainService {
     TrainRepository trainRepository;
 
     public Integer addTrain(AddTrainEntryDto trainEntryDto){
-
-        //Add the train to the trainRepository
-        //and route String logic to be taken from the Problem statement.
-        //Save the train and return the trainId that is generated from the database.
         //Avoid using the lombok library
-        return null;
+
+        Train train = new Train();
+        List<Station> stationList = trainEntryDto.getStationRoute();
+
+        //and route String logic to be taken from the Problem statement.
+        String route = "";
+
+        for(int i=0; i < stationList.size(); i++){
+            if(i == stationList.size()-1){ route += stationList.get(i); }
+            else { route += stationList.get(i) + ","; }
+        }
+
+        train.setRoute(route);
+        train.setNoOfSeats(trainEntryDto.getNoOfSeats());
+        train.setDepartureTime(trainEntryDto.getDepartureTime());
+        //Add the train to the trainRepository
+        //Save the train and return the trainId that is generated from the database.
+        trainRepository.save(train);
+        return train.getTrainId();
     }
 
     public Integer calculateAvailableSeats(SeatAvailabilityEntryDto seatAvailabilityEntryDto){
@@ -58,8 +72,19 @@ public class TrainService {
 
         //Throughout the journey of the train between any 2 stations
         //We need to find out the age of the oldest person that is travelling the train
-        //If there are no people travelling in that train you can return 0
 
+        Train train = trainRepository.findById(trainId).get();
+        int age = -1;
+        //If there are no people travelling in that train you can return 0
+        if(train.getBookedTickets().size()==0) return 0;
+
+        List<Ticket> tickets = train.getBookedTickets();
+            for(Ticket ticket : tickets){
+                List<Passenger> passengers = ticket.getPassengersList();
+                for(Passenger passenger :passengers){
+                    age = Math.max(age,passenger.getAge());
+                }
+            }
         return 0;
     }
 
