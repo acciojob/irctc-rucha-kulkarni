@@ -27,14 +27,7 @@ public class TrainService {
         List<Station> stationList = trainEntryDto.getStationRoute();
 
         //and route String logic to be taken from the Problem statement.
-        String route = "";
-
-        for(int i=0; i < stationList.size(); i++){
-            if(i == stationList.size()-1){ route += stationList.get(i); }
-            else { route += stationList.get(i) + ","; }
-        }
-
-        train.setRoute(route);
+        train.setRoute(stationList.toString());
         train.setNoOfSeats(trainEntryDto.getNoOfSeats());
         train.setDepartureTime(trainEntryDto.getDepartureTime());
         //Add the train to the trainRepository
@@ -63,6 +56,12 @@ public class TrainService {
         //if the trainId is not passing through that station
         //throw new Exception("Train is not passing from this station");
         //  in a happy case we need to find out the number of such people.
+
+
+
+
+
+
 
 
         return 0;
